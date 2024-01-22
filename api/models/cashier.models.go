@@ -18,7 +18,7 @@ type Cashier struct {
 	UserName  string `gorm:"type:string; not null; unique; size:20"`
 	Email     string `gorm:"type:string; size:30; not null; unique"`
 	Contact   string `gorm:"type:string; size:20; null;"`
-	Password  string `gorm:"type:string; size:72; not null"`
+	Password  string `gorm:"type:string; not null"`
 	RetailID  uint
 	Retail    Retail
 	Sales     []Sale

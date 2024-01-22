@@ -12,7 +12,7 @@ type Retail struct {
 	ID       uint      `gorm:"type:integer; primaryKey"`
 	Email    string    `gorm:"type:string; size:30; not null; unique"`
 	contact  string    `gorm:"type:string; size:30; not null; unique"`
-	Password string    `gorm:"type:string; size:72; not null"`
+	Password string    `gorm:"type:string; not null"`
 	Cashiers []Cashier `gorm:"foreignKey:RetailID"`
 	Items    []Item    `gorm:"foreignKey:ItemId"`
 }
