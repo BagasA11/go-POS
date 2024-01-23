@@ -16,6 +16,7 @@ type Sale struct {
 	DeletedAt  uint  `gorm:"type:integer; default:null"`
 	CashierID  uint
 	Cashiers   Cashier
+	Return     []Return
 	SaleDetail []SaleDetail
 }
 

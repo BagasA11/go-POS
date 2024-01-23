@@ -9,12 +9,13 @@ import (
 
 type Retail struct {
 	gorm.Model
-	ID       uint      `gorm:"type:integer; primaryKey"`
-	Email    string    `gorm:"type:string; size:30; not null; unique"`
-	contact  string    `gorm:"type:string; size:30; not null; unique"`
-	Password string    `gorm:"type:string; not null"`
-	Cashiers []Cashier `gorm:"foreignKey:RetailID"`
-	Items    []Item    `gorm:"foreignKey:ItemId"`
+	ID         uint      `gorm:"type:integer; primaryKey"`
+	Email      string    `gorm:"type:string; size:30; not null; unique"`
+	contact    string    `gorm:"type:string; size:30; not null; unique"`
+	Password   string    `gorm:"type:string; not null"`
+	CashierAvb uint      `gorm:"type:integer; not null"`
+	Cashiers   []Cashier `gorm:"foreignKey:RetailID"`
+	Items      []Item    `gorm:"foreignKey:ItemId"`
 }
 
 // Before
@@ -26,7 +27,7 @@ func (retail *Retail) BeforeCreate(tx *gorm.DB) error {
 	}
 	fmt.Println(retail.Password)
 	tx.Statement.SetColumn("Password", hash)
-
+	tx.Statement.SetColumn("CashierAvb", 2)
 	// // generate time
 	// tx.Statement.SetColumn("CreatedAt", time.Now().Unix())
 	// tx.Statement.SetColumn("UpdatedAt", time.Now().Unix())

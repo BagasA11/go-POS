@@ -10,6 +10,6 @@ type SaleDetail struct {
 	Qty    int16 `gorm:"type:integer; not null"`
 	SaleID uint
 	Sale   Sale
-	ItemId string
+	ItemId uint
 	Item   Item
 }
