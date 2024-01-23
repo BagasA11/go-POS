@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -14,6 +15,9 @@ type Retail struct {
 	contact    string    `gorm:"type:string; size:30; not null; unique"`
 	Password   string    `gorm:"type:string; not null"`
 	CashierAvb uint      `gorm:"type:integer; not null"`
+	CreatedAt  uint      `gorm:"type:integer; not null"`
+	UpdatedAt  uint      `gorm:"type:integer; not null"`
+	DeletedAt  uint      `gorm:"type:integer; default:null"`
 	Cashiers   []Cashier `gorm:"foreignKey:RetailID"`
 	Items      []Item    `gorm:"foreignKey:ItemId"`
 }
@@ -29,7 +33,7 @@ func (retail *Retail) BeforeCreate(tx *gorm.DB) error {
 	tx.Statement.SetColumn("Password", hash)
 	tx.Statement.SetColumn("CashierAvb", 2)
 	// // generate time
-	// tx.Statement.SetColumn("CreatedAt", time.Now().Unix())
-	// tx.Statement.SetColumn("UpdatedAt", time.Now().Unix())
+	tx.Statement.SetColumn("CreatedAt", time.Now().Unix())
+	tx.Statement.SetColumn("UpdatedAt", time.Now().Unix())
 	return nil
 }
