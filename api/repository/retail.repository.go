@@ -21,7 +21,7 @@ func NewRetailRepository() *RetailRepository {
 }
 
 /*create new record*/
-func (retailRepo *RetailRepository) CreateRetail(retail models.Retail) error {
+func (retailRepo *RetailRepository) Create(retail models.Retail) error {
 	tx := retailRepo.db.Begin()
 	err := tx.Create(&retail).Error
 	if err != nil {
@@ -34,9 +34,7 @@ func (retailRepo *RetailRepository) CreateRetail(retail models.Retail) error {
 /*find Retail object by ID*/
 func (retailRepo *RetailRepository) FindByID(ID uint) (models.Retail, error) {
 	var rtl models.Retail
-
 	err := retailRepo.db.Where("id = ?", ID).First(&rtl).Error
-
 	return rtl, err
 }
 
@@ -48,7 +46,7 @@ func (rtlRepo *RetailRepository) FindEmail(Email string) (models.Retail, error) 
 }
 
 /*retrieve entire record of Retail object*/
-func (rtlRepo *RetailRepository) FindAll() ([]models.Retail, error) {
+func (rtlRepo *RetailRepository) All() ([]models.Retail, error) {
 	var rtl []models.Retail
 	err := rtlRepo.db.Find(&rtl).Error
 	return rtl, err

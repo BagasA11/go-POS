@@ -8,6 +8,7 @@ import (
 type ItemDetail struct {
 	gorm.Model
 	UUID   string `gorm:"type:string; primaryKey"`
+	Avail  bool   `gorm:"default:true"`
 	ItemID uint
 	item   Item
 }
