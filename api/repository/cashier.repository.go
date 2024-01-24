@@ -7,6 +7,7 @@ package repository
 import (
 	"BagasA11/go-POS/api/models"
 	"BagasA11/go-POS/configs"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -52,4 +53,27 @@ func (CR *CashierRepository) All() ([]models.Cashier, error) {
 	var csr []models.Cashier
 	err := CR.Db.Find(&csr).Error
 	return csr, err
+}
+
+/*change Cashier attribute*/
+func (CR *CashierRepository) Update(csr *models.Cashier) error {
+	tx := CR.Db.Begin()
+	err := tx.Model(&models.Cashier{}).Where("id = ?", csr.ID).Updates(&csr).Error
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+	return nil
+}
+
+/*delete Retail object*/
+func (CR *CashierRepository) Delete(ID uint) error {
+	tx := CR.Db.Begin()
+	err := tx.Model(&models.Cashier{}).Where("id = ?", ID).Update("deleted_at", time.Now().Unix()).Error
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	return nil
 }
