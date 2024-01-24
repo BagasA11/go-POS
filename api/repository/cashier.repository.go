@@ -1,9 +1,5 @@
 package repository
 
-// "BagasA11/go-POS/api/models"
-// 	"BagasA11/go-POS/configs"
-// 	"time"
-// 	"gorm.io/gorm"
 import (
 	"BagasA11/go-POS/api/models"
 	"BagasA11/go-POS/configs"
