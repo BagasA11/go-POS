@@ -42,7 +42,7 @@ func (IR *ItemRepository) FindByID(id uint) (models.Item, error) {
 	return item, err
 }
 
-/*find item by ID method*/
+/*find item by name*/
 func (IR *ItemRepository) FindName(name string) ([]models.Item, error) {
 	var item []models.Item
 	//LIKE
