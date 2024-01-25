@@ -3,11 +3,11 @@ package repository
 import (
 	"BagasA11/go-POS/api/models"
 	"BagasA11/go-POS/configs"
+	"time"
 
 	"gorm.io/gorm"
 )
 
-// "time"
 type ItemRepository struct {
 	Db *gorm.DB
 }
@@ -63,5 +63,16 @@ func (IR *ItemRepository) Update(item models.Item) error {
 		return err
 	}
 	tx.Commit()
+	return nil
+}
+
+/*delete object*/
+func (IR *ItemRepository) Delete(id uint) error {
+	tx := IR.Db.Begin()
+	err := tx.Model(&models.Item{}).Where("id = ?", id).Update("deleted_at", time.Now().Unix()).Error
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
 	return nil
 }
