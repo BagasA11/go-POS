@@ -3,9 +3,10 @@ package repository
 import (
 	"BagasA11/go-POS/api/models"
 	"BagasA11/go-POS/configs"
-	"time"
 
 	"gorm.io/gorm"
+
+	"time"
 )
 
 type ItemRepository struct {
