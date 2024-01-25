@@ -1,10 +1,5 @@
 package repository
 
-// "BagasA11/go-POS/api/models"
-// 	"BagasA11/go-POS/configs"
-// 	"time"
-// 	"gorm.io/gorm"
-
 import (
 	"BagasA11/go-POS/api/models"
 	"BagasA11/go-POS/configs"
@@ -12,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// "time"
 type ItemRepository struct {
 	Db *gorm.DB
 }
@@ -56,4 +52,16 @@ func (IR *ItemRepository) All() ([]models.Item, error) {
 	var item []models.Item
 	err := IR.Db.Find(&item).Error
 	return item, err
+}
+
+/*update object porperty values*/
+func (IR *ItemRepository) Update(item models.Item) error {
+	tx := IR.Db.Begin()
+	err := tx.Model(&models.Item{}).Where("id = ?", item.Id).Error
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+	return nil
 }
