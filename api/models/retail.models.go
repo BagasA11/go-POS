@@ -12,7 +12,7 @@ type Retail struct {
 	gorm.Model
 	ID         uint      `gorm:"type:integer; primaryKey"`
 	Email      string    `gorm:"type:string; size:30; not null; unique"`
-	contact    string    `gorm:"type:string; size:30; not null; unique"`
+	Contact    string    `gorm:"type:string; size:30; not null; unique"`
 	Password   string    `gorm:"type:string; not null"`
 	CashierAvb uint      `gorm:"type:integer; not null"`
 	CreatedAt  uint      `gorm:"type:integer; not null"`

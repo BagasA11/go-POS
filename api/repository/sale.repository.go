@@ -3,6 +3,7 @@ package repository
 import (
 	"BagasA11/go-POS/api/models"
 	"BagasA11/go-POS/configs"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -37,8 +38,10 @@ func (SlRepo *SaleRepository) FindByID(id uint) (models.Sale, error) {
 }
 
 /*retrieve all record if transaction date is match*/
-func FindDate() {
-
+func (SlRepo *SaleRepository) FindDate(time time.Time) ([]models.Sale, error) {
+	var sale []models.Sale
+	err := SlRepo.Db.Where("created_at >= ? AND upadated_at >= ?", time, time).Find(&sale).Error
+	return sale, err
 }
 
 /*get All*/
@@ -57,5 +60,16 @@ func (SlRepo *SaleRepository) Update(sale *models.Sale) error {
 		return err
 	}
 	tx.Commit()
+	return nil
+}
+
+/*Delete object*/
+func (SlRepo *SaleRepository) Delete(id uint) error {
+	tx := SlRepo.Db.Begin()
+	err := tx.Model(&models.Sale{}).Where("id = ?", id).Update("deleted_at", time.Now().Unix()).Error
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
 	return nil
 }
