@@ -35,3 +35,27 @@ func (SlRepo *SaleRepository) FindByID(id uint) (models.Sale, error) {
 	err := SlRepo.Db.Where("id = ?", id).First(&sale).Error
 	return sale, err
 }
+
+/*retrieve all record if transaction date is match*/
+func FindDate() {
+
+}
+
+/*get All*/
+func (SlRepo *SaleRepository) All(id uint) ([]models.Sale, error) {
+	var sale []models.Sale
+	err := SlRepo.Db.Find(&sale).Error
+	return sale, err
+}
+
+/*Update*/
+func (SlRepo *SaleRepository) Update(sale *models.Sale) error {
+	tx := SlRepo.Db.Begin()
+	err := tx.Model(&models.Sale{}).Where("id = ?", sale.ID).Updates(&sale).Error
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+	return nil
+}

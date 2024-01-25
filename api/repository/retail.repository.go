@@ -67,12 +67,12 @@ func (rtlRepo *RetailRepository) Update(rtl *models.Retail) error {
 /*decrease cashier quota where new cashier employee is registered*/
 func (rtlRepo *RetailRepository) DecreaseCashier(rtl *models.Retail) error {
 	tx := rtlRepo.db.Begin()
-	err := tx.Model(&models.Retail{}).Where("id = ?", rtl.ID).Error
+	err := tx.Model(&models.Retail{}).Where("id = ? AND cashieravb - 1 > ?", rtl.ID, 0).Update("cashieravb", rtl.CashierAvb-1).Error
 	if err != nil {
+		tx.Rollback()
 		return err
 	}
-	rtl.CashierAvb -= 1
-	rtlRepo.db.Save(&rtl)
+	tx.Commit()
 	return nil
 }
 
