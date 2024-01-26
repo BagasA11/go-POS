@@ -37,10 +37,17 @@ func (SlRepo *SaleRepository) FindByID(id uint) (models.Sale, error) {
 	return sale, err
 }
 
-/*retrieve all record if transaction date is match*/
-func (SlRepo *SaleRepository) FindDate(time time.Time) ([]models.Sale, error) {
+/*retrieve all record if transaction date is Greater or same with argument*/
+func (SlRepo *SaleRepository) FindDateGTE(tArg time.Time) ([]models.Sale, error) {
 	var sale []models.Sale
-	err := SlRepo.Db.Where("created_at >= ? AND upadated_at >= ?", time, time).Find(&sale).Error
+	err := SlRepo.Db.Where("created_at >= ?", tArg).Find(&sale).Error
+	return sale, err
+}
+
+/*retrieve all record if transaction date is Less or same with argument*/
+func (SlRepo *SaleRepository) FindDateLTE(tArg time.Time) ([]models.Sale, error) {
+	var sale []models.Sale
+	err := SlRepo.Db.Where("created_at <= ?", tArg).Find(&sale).Error
 	return sale, err
 }
 

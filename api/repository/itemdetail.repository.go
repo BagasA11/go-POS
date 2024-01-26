@@ -17,12 +17,6 @@ func NewItmDtlRepo() *ItemDetailRepository {
 	}
 }
 
-// all
-//uuid
-//soldout
-//update
-//delete
-
 // Create new Item Detail
 func (ItDtlRepo *ItemDetailRepository) Create(itmDtl models.ItemDetail) error {
 	tx := ItDtlRepo.Db.Begin()
@@ -57,5 +51,28 @@ func (ItDtlRepo *ItemDetailRepository) SoldOut(itmDtl models.ItemDetail) error {
 		return err
 	}
 	tx.Commit()
+	return nil
+}
+
+/*update Item Detail object*/
+func (ItDtlRepo *ItemDetailRepository) Update(itmDtl *models.ItemDetail) error {
+	tx := ItDtlRepo.Db.Begin()
+	err := tx.Model(&models.ItemDetail{}).Where("uuid = ?", itmDtl.UUID).Updates(&itmDtl).Error
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+	return nil
+}
+
+/*Delete Item Detail Object*/
+func (ItDtlRepo *ItemDetailRepository) Delete(uuid string) error {
+	tx := ItDtlRepo.Db.Begin()
+	err := tx.Delete(&models.ItemDetail{}, uuid).Error
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
 	return nil
 }
