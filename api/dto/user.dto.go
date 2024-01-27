@@ -32,6 +32,7 @@ type CashierCreate struct {
 	Username string `json:"username" binding:"required,min=8"`
 	Email    string `json:"email" binding:"required,min=5"`
 	Password string `json:"password" binding:"required,min=8"`
+	RetailID uint
 }
 
 type CashierLogin struct {
