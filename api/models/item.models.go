@@ -12,7 +12,7 @@ type Item struct {
 	Name       string `gorm:"type:string; not null; size:50"`
 	Price      int64  `gorm:"type:integer; not null"`
 	Stock      int16  `gorm:"type:integer; not null"`
-	Unit       string `gorm:"type:string; not null; size:7"`
+	Unit       string `gorm:"type:string; null; size:7"`
 	RetailID   uint   //Item is BelongsTo Retail
 	Retail     Retail
 	SaleDetail []SaleDetail //Item is HasMany of SaleDetail

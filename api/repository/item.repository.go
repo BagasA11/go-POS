@@ -58,13 +58,31 @@ func (IR *ItemRepository) All() ([]models.Item, error) {
 /*update object porperty values*/
 func (IR *ItemRepository) Update(item models.Item) error {
 	tx := IR.Db.Begin()
-	err := tx.Model(&models.Item{}).Where("id = ?", item.Id).Error
+	err := tx.Model(&models.Item{}).Where("id = ?", item.Id).Updates(&item).Error
 	if err != nil {
 		tx.Rollback()
 		return err
 	}
 	tx.Commit()
 	return nil
+}
+
+func (IR *ItemRepository) UpdateStock(id uint, stock int16) error {
+	tx := IR.Db.Begin()
+	err := tx.Model(&models.Item{}).Where("id = ?", id).Update("stock", abs(stock)).Error
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+	return nil
+}
+
+func abs(num int16) int16 {
+	if num < 0 {
+		return num * -1
+	}
+	return num
 }
 
 /*delete object*/

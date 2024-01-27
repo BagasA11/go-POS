@@ -15,7 +15,7 @@ import (
 type Cashier struct {
 	gorm.Model
 	ID        uint   `gorm:"type:integer; primaryKey"`
-	UserName  string `gorm:"type:string; not null; unique; size:20"`
+	Username  string `gorm:"type:string; not null; unique; size:20"`
 	Email     string `gorm:"type:string; size:30; not null; unique"`
 	Contact   string `gorm:"type:string; size:20; null;"`
 	Password  string `gorm:"type:string; not null"`
